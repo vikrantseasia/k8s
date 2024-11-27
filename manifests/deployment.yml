@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: tauthservice 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tauthservice
+  template:
+    metadata:
+      labels:
+        app: tauthservice 
+    spec:
+      containers:
+        - name: tauthservice 
+          image: revizoacr.azurecr.io/tauthservice
+          ports:
+          - containerPort: 8000

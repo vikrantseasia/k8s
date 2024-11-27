@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  auth_service:
+    build:
+      context: /microservices/auth_service
+      dockerfile: Dockerfile.auth
+    image: revizoboard/auth_service:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=bdbdbdbdbdbhyy21@@@123hfdh
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - MONGO_USER=revizoboard
+      - MONGO_PASSWORD=GGiU8t++3fhHxha3ut5SLTwnYHl2xJnF96IgQluWAehmXFGbJX3ojXAc+FAwMc3
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - MONGO_DB_NAME=revizoboard
+      - MONGO_READ_PREFERENCE=primaryPreferred
+      - MONGO_AUTH_SOURCE=revizoboard
+    depends_on:
+      - mongo
+
+  deployment_history_service:
+    build:
+      context: /microservices/deployment_history_service
+      dockerfile: Dockerfile.deployment
+    image: revizoboard/deployment_history_service:latest
+    ports:
+      - "8001:8001"
+    environment:
+      - SECRET_KEY=bdbdbdbdbdbhyy21@@@123hfdh
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - MONGO_USER=revizoboard
+      - MONGO_PASSWORD=GGiU8t++3fhHxha3ut5SLTwnYHl2xJnF96IgQluWAehmXFGbJX3ojXAc+FAwMc3
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - MONGO_DB_NAME=revizoboard
+      - MONGO_READ_PREFERENCE=primaryPreferred
+      - MONGO_AUTH_SOURCE=revizoboard
+    depends_on:
+      - mongo
+
+  project_management_service:
+    build:
+      context: /microservices/project_management_service
+      dockerfile: Dockerfile.project
+    image: revizoboard/project_management_service:latest
+    ports:
+      - "8002:8002"
+    environment:
+      - SECRET_KEY=bdbdbdbdbdbhyy21@@@123hfdh
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - MONGO_USER=revizoboard
+      - MONGO_PASSWORD=GGiU8t++3fhHxha3ut5SLTwnYHl2xJnF96IgQluWAehmXFGbJX3ojXAc+FAwMc3
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - MONGO_DB_NAME=revizoboard
+      - MONGO_READ_PREFERENCE=primaryPreferred
+      - MONGO_AUTH_SOURCE=revizoboard
+    depends_on:
+      - mongo
+
+  user_management_service:
+    build:
+      context: /microservices/user_management_service
+      dockerfile: Dockerfile.user
+    image: revizoboard/user_management_service:latest
+    ports:
+      - "8003:8003"
+    environment:
+      - SECRET_KEY=bdbdbdbdbdbhyy21@@@123hfdh
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - MONGO_USER=revizoboard
+      - MONGO_PASSWORD=GGiU8t++3fhHxha3ut5SLTwnYHl2xJnF96IgQluWAehmXFGbJX3ojXAc+FAwMc3
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - MONGO_DB_NAME=revizoboard
+      - MONGO_READ_PREFERENCE=primaryPreferred
+      - MONGO_AUTH_SOURCE=revizoboard
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=revizoboard
+      - MONGO_INITDB_ROOT_PASSWORD=GGiU8t++3fhHxha3ut5SLTwnYHl2xJnF96IgQluWAehmXFGbJX3ojXAc+FAwMc3
+      - MONGO_INITDB_DATABASE=revizoboard
