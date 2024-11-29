@@ -1,0 +1,39 @@
+# ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /auth
+            pathType: Prefix
+            backend:
+              service:
+                name: authservice
+                port:
+                  number: 80
+          - path: /project
+            pathType: Prefix
+            backend:
+              service:
+                name: projectservice
+                port:
+                  number: 80
+          - path: /deployment
+            pathType: Prefix
+            backend:
+              service:
+                name: deploymenthistoryservice
+                port:
+                  number: 80
+          - path: /user
+            pathType: Prefix
+            backend:
+              service:
+                name: userservice
+                port:
+                  number: 80

@@ -1,0 +1,43 @@
+# userservice-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userservice
+  template:
+    metadata:
+      labels:
+        app: userservice
+    spec:
+      nodeSelector:
+        pool: userpool
+      containers:
+      - name: userservice
+        image: aksdemo001.azurecr.io/user-service:v1
+        ports:
+        - containerPort: 8003
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+---
+# userservice-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: userservice
+spec:
+  selector:
+    app: userservice
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8003
+  type: ClusterIP

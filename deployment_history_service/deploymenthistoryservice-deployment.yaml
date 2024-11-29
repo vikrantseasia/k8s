@@ -1,0 +1,43 @@
+# deploymenthistoryservice-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploymenthistoryservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deploymenthistoryservice
+  template:
+    metadata:
+      labels:
+        app: deploymenthistoryservice
+    spec:
+      nodeSelector:
+        pool: userpool
+      containers:
+        - name: deploymenthistoryservice
+          image: aksdemo001.azurecr.io/deployment-history-service:v1
+          ports:
+            - containerPort: 8002
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+# deploymenthistoryservice-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: deploymenthistoryservice
+spec:
+  selector:
+    app: deploymenthistoryservice
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8002
+  type: ClusterIP
