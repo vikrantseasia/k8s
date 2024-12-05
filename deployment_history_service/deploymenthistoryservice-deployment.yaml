@@ -19,7 +19,7 @@ spec:
         - name: deploymenthistoryservice
           image: aksdemo001.azurecr.io/deployment-history-service:v1
           ports:
-            - containerPort: 8002
+            - containerPort: 8001
           resources:
             requests:
               cpu: "250m"
@@ -39,5 +39,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8002
+      targetPort: 8001
   type: ClusterIP
